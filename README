@@ -1,0 +1,132 @@
+"NOT COMPATIBLE TO LEGACY VI VERSIONS
+set nocompatible
+
+" ===========
+" Plugin list
+" ===========
+
+filetype off
+call plug#begin('~/.vim/plugged')
+
+" autocompletion interface
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+
+" lint interface
+Plug 'scrooloose/syntastic'
+
+" file navigation
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'kien/ctrlp.vim'
+
+" text objects / editing
+Plug 'Raimondi/delimitMate'
+Plug 'tpope/vim-surround'
+
+" motions
+Plug 'Lokaltog/vim-easymotion'
+Plug 'justinmk/vim-sneak'
+
+" colorscheme
+Plug 'flazz/vim-colorschemes'
+
+" tmux
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'benmills/vimux'
+
+call plug#end()
+filetype plugin indent on
+
+
+" =====================
+" Plugin configurations
+" =====================
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" ctag setting
+set tags=/home/sangu/pintos/src/tags
+" YCM
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+
+
+" Nerdtree
+let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_autoclose = 1
+map <C-u> :NERDTreeTabsToggle<CR>
+
+" Easymotion
+let g:EasyMotion_smartcase = 1
+nmap <C-f> <Plug>(easymotion-sn)
+
+
+" vimux
+map <leader>vp :VimuxPromptCommand<CR>
+map <leader>vl :VimuxRunLastCommand<CR>
+map <Leader>vq :VimuxCloseRunner<CR>
+map <Leader>vx :VimuxInterruptRunner<CR>
+
+
+" ================
+" General settings
+" ================
+
+" use ctrl to move between splits
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+
+" terminal
+ if &term =~ '256color'
+     " disable Background Color Erase (BCE) so that color schemes
+     " render properly when inside 256-color tmux and GNU screen.
+     " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+     set t_ut=
+ endif
+
+" color scheme
+syntax on
+set background=dark
+colorscheme Monokai
+
+" search
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+" column display
+set nu
+set colorcolumn=79
+highlight ColorColumn ctermbg=red
+
+" fast escape
+imap jk <Esc>
+
+" don't want to press shift
+nmap ; :
+
+" Key mappings
+nnoremap <F9> :tabnew<CR>
+nnoremap <F10> :tabclose<CR>
+nnoremap <tab> :tabnext<CR>
+nnoremap <S-tab> :tabprevious<CR>
+nnoremap - :vertical res -10<CR>
+nnoremap = :vertical res +10<CR>
+nnoremap _ :res -10<CR>
+nnoremap + :res +10<CR>
+
+" Indentations
+set expandtab
+set smarttab
+set smartindent
+set shiftwidth=4
+set tabstop=2
